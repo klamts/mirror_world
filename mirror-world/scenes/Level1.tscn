@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0qahpeysdou2"]
+
+[ext_resource type="PackedScene" uid="uid://deli5ls5mgcx7" path="res://scenes/Player.tscn" id="1_6ovph"]
+[ext_resource type="Script" uid="uid://1rghmge62txy" path="res://scripts/Level1.gd" id="1_dw26h"]
+[ext_resource type="Script" uid="uid://c1k47b6i8vand" path="res://scripts/Player.gd" id="3_lrl65"]
+[ext_resource type="PackedScene" uid="uid://b0th31pxllc47" path="res://scenes/Goal.tscn" id="4_76388"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svatc"]
+size = Vector2(1000, 50)
+
+[sub_resource type="Texture2DRD" id="Texture2DRD_ecr63"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n34uq"]
+size = Vector2(64, 96)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_dw26h")
+
+[node name="Player" parent="." groups=["players"] instance=ExtResource("1_6ovph")]
+position = Vector2(-200, -1)
+script = ExtResource("3_lrl65")
+
+[node name="GoalLeft" parent="." instance=ExtResource("4_76388")]
+
+[node name="MirrorPlayer" parent="." groups=["players"] instance=ExtResource("1_6ovph")]
+modulate = Color(0.881755, 0.861315, 3.85046e-07, 1)
+position = Vector2(200, 0)
+scale = Vector2(-1, -1)
+script = ExtResource("3_lrl65")
+mirror = true
+
+[node name="GoalRight" parent="." instance=ExtResource("4_76388")]
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(0, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_svatc")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground"]
+texture = SubResource("Texture2DRD_ecr63")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(3, 0)
+shape = SubResource("RectangleShape2D_n34uq")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+
+[node name="WinLabel" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-2, 24)
